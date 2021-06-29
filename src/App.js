@@ -7,14 +7,16 @@ const App = () => {
   const [timerHours, setTimerHours] = useState('00');
   const [timerMinutes, setTimerMinutes] = useState('00');
   const [timerSeconds, setTimerSeconds] = useState('00');
+  const [date, setDate] = useState('June 30 2021 00:00:00:00')
   const [pause, setPause] = useState(false);
 
     let interval = useRef(); // interval in which time will be updating
 
   const startTimer = () => {
-    const countdownDate = new Date('June 3 2021 00:00:00:00').getTime(); //start timer from this date, getTime() - method
+    const countdownDate = new Date(date).getTime(); //start timer from this date, getTime() - method
+    
     interval = setInterval(()=>{
-      const now = new Date().getTime(); //keep updating the timer (intance)
+      const now = new Date().getTime(); //keep updating the timer (instance)
       const distance = countdownDate - now; 
 
       const days =  Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -36,25 +38,27 @@ const App = () => {
     }, 1000) //call every second
   }
 
-  // const stopTimer = () => {
-  //   setPause(true)
-  // }
+  const stopTimer = () => {
+    setPause(true)
+  }
 
-  //componentDidMount
-  // useEffect(()=> {
-  //   setPause(false)
-  //   startTimer();
-  //   return () => {
-  //     clearInterval(interval.current) //stop counting down
-  //   }
-  // },[])
+  // componentDidMount
+  useEffect(()=> {
+    // setPause(false)
+    startTimer();
+    return () => {
+      clearInterval(interval.current) //stop counting down
+    }
+  },[])
+
   return (
       <div className="App">
         <div className='timer'>
           <div>
             {/* <h1>Countdown Timer</h1> */}
           {/* <span className="far fa-clock"></span> */}
-          <button className='btn' onClick={startTimer}>{pause ? "Pause": "Start"}</button>
+          <h1>Time until June 30 2021</h1>
+          {/* <button className='btn' onClick={startTimer}>{pause ? "Pause": "Start"}</button> */}
           </div>
           <div>
           <section>
